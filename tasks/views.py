@@ -37,5 +37,5 @@ def updateTask(request, pk):
 
 
 def deleteTask(request, pk):
-    item = Task.objects.get(id=pk).delete()
-    return render(request, 'list.html')
+    Task.objects.get(id=pk).delete()
+    return redirect('/')
