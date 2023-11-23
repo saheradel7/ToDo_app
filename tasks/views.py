@@ -1,21 +1,33 @@
-from django.http import HttpResponse
-from django.template import loader
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .models import *
-from .forms import *
+from .models import Task
+from .forms import TaskForm
 
-
+@login_required
 def index(request):
-    tasks = Task.objects.all()
     form = TaskForm()
-    if request.method == 'POST':
+    tasks =Task.objects.filter(user = request.user)
+    if request.method=='POST':
         form = TaskForm(request.POST)
         if form.is_valid():
-            form.save()
+            task = form.save(commit=False)
+            task.user = request.user
+            task.save()
         return redirect('/')
+    return render(request , 'list.html', {'tasks':tasks ,'form':form})
 
-    context = {'tasks': tasks, 'form':form}
-    return render(request, 'tasks/list.html', context )
+
+
+    # tasks = Task.objects.all()
+    # form = TaskForm()
+    # if request.method == 'POST':
+    #     form = TaskForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #     return redirect('/')
+
+    # context = {'tasks': tasks, 'form':form}
+    # return render(request, 'list.html', context )
 
 
 def updateTask(request, pk):
