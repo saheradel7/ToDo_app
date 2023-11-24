@@ -35,7 +35,7 @@ def updateTask(request, pk):
 
 
 
-
+@login_required
 def deleteTask(request, pk):
-    Task.objects.get(id=pk).delete()
+    Task.objects.get(id=pk,user =request.user).delete()
     return redirect('/')

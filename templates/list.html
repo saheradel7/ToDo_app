@@ -68,10 +68,14 @@
         .btn-sm {
             font-size: 14px;
         }
+		
+	
+		
     </style>
     <title>To Do App</title>
 </head>
 <body>
+
     <div class="container">
         <div class="col-7 mx-auto">
             <h1>To Do App</h1>
@@ -100,17 +104,19 @@
                 <tbody>
                     {% for t in tasks %}
                         <tr>
-                            <td class="text-center col-8" style="font-size: 18px;">{{ t.title }}</td>
+                            <td class="text-center col-8 " style="font-size: 18px;">{{ t.title }}</td>
                             <td>
-                                <button type="button" class="btn btn-success btn-sm">Done</button>
+								<button type="button" class="btn btn-success btn-sm done-btn">Done</button>
                                 <a type="button" class="btn btn-primary btn-sm" href = "{% url 'update_task' t.id%}">Edit</a>
                                 <a type="button" href="{% url 'delete' t.id%}" class="btn btn-danger btn-sm">Delete</a>
-                            </td>
+								
+							</td>
                         </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+
 </body>
 </html>
