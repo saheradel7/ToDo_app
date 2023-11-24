@@ -39,3 +39,16 @@ def updateTask(request, pk):
 def deleteTask(request, pk):
     Task.objects.get(id=pk,user =request.user).delete()
     return redirect('/')
+
+
+@login_required
+def check(request, pk):
+    task= Task.objects.get(id=pk,user =request.user)
+    if task.completed == True :
+        task.completed = False
+    elif task.completed == False:
+        task.completed = True
+    task.save()
+    return redirect('/')
+
+
